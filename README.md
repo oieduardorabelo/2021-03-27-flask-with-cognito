@@ -1,0 +1,45 @@
+# 2021-03-27 - Flask with Amazon Cognito
+
+### Template Deploy
+
+To deploy [AWS CloudFormation](https://aws.amazon.com/cloudformation/):
+
+```bash
+# running aws-cli like that, it will look for the "default" profile in `~/.aws/credentials`
+aws cloudformation deploy \
+  --template-file template.yaml \
+  --stack-name FlaskWithCognito
+```
+
+### Reference
+
+Amazon Cognito User Pool Domain pattern:
+
+```
+https://${DomainName}.auth.${AwsRegion}.amazoncognito.com
+```
+
+Amazon Cognito OAuth Server URL:
+
+```
+https://${DomainName}.auth.${AwsRegion}.amazoncognito.com/login
+?client_id=${UserPoolClientID}
+&response_type=${code-or-token}
+&scope=${whatever-scopes-you-require}
+&redirect_uri=${CallbackUrlYouDefined}
+```
+
+- The `response_type` accepts either the value `code` or `token`, based on the OAuth flow your application requires
+- `code` is the most common and requires your app to exchange the returned guid-like code for bearer tokens (ID, Access, Refresh)
+- `token` represents the implicit flow and returns the bearer tokens directly to your application
+- The `redirect_uri` must be allowed in the AMazon Cognito configuration. You can specify the value via the `CallbackURLs` property under the `CognitoUserPoolClientWebApplication` (line 35 in the [template.yaml](./template.yaml)`).
+
+Here’s a full example from the CloudFormation Template:
+
+```
+https://${DomainName}.auth.${AwsRegion}.amazoncognito.com/login
+?client_id=${UserPoolClient}
+&response_type=code
+&scope=email+openid+profile
+&redirect_uri=http://localhost:5000
+```
