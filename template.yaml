@@ -4,7 +4,8 @@ Resources:
   CognitoUserPool:
     Type: AWS::Cognito::UserPool
     Properties:
-      AutoVerifiedAttributes: []
+      AutoVerifiedAttributes:
+        - email
       Policies:
         PasswordPolicy:
           MinimumLength: 6
@@ -14,11 +15,6 @@ Resources:
           RequireSymbols: false
       UsernameAttributes:
         - email
-      Schema:
-        - AttributeDataType: String
-          Name: name
-          Required: false
-          Mutable: true
 
   CognitoUserPoolClientWebApplication:
     Type: AWS::Cognito::UserPoolClient
@@ -32,7 +28,7 @@ Resources:
       PreventUserExistenceErrors: ENABLED
       AllowedOAuthFlowsUserPoolClient: true
       CallbackURLs:
-        - http://localhost:5000
+        - http://localhost:5000/cognito_redirect
       AllowedOAuthFlows:
         - code
         - implicit
