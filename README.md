@@ -6,7 +6,7 @@
 
 The OAuth redirect will happens **only if the user signing in is confirmed**. You need to use one of the two options:
 
-1. Use the default email verification with Cognito (e.g. sending a code to your email)
+1. Use the default email verification with Cognito (e.g. sending a code to a real/valid email)
 2. Auto confirm the user with a lambda on the "pre signup" trigger
 
 This repository is using option 1.
