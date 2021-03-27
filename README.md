@@ -1,5 +1,7 @@
 # 2021-03-27 - Flask with Amazon Cognito
 
+- Example to answer a Stackoverflow question: https://stackoverflow.com/questions/66668865/aws-cognito-flask-app-cant-grab-the-jwt-from-the-url/66706380#66706380
+
 ### Running Flask App
 
 ```
