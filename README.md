@@ -2,6 +2,15 @@
 
 - Example to answer a Stackoverflow question: https://stackoverflow.com/questions/66668865/aws-cognito-flask-app-cant-grab-the-jwt-from-the-url/66706380#66706380
 
+🚨🚨🚨 IMPORTANT 🚨🚨🚨
+
+The OAuth redirect will happens **only if the user signing in is confirmed**. You need to use one of the two options:
+
+1. Use the default email verification with Cognito (e.g. sending a code to your email)
+2. Auto confirm the user with a lambda on the "pre signup" trigger
+
+This repository is using option 1.
+
 ### Running Flask App
 
 ```
@@ -53,3 +62,9 @@ https://${DomainName}.auth.${AwsRegion}.amazoncognito.com/login
 &scope=email+openid+profile
 &redirect_uri=http://localhost:5000
 ```
+
+### Screenshots
+
+- Amazon Cognito redirect will append a `code` query string in the redirect url
+
+![](./images/00.png)
