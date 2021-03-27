@@ -51,7 +51,7 @@ https://${DomainName}.auth.${AwsRegion}.amazoncognito.com/login
 - The `response_type` accepts either the value `code` or `token`, based on the OAuth flow your application requires
 - `code` is the most common and requires your app to exchange the returned guid-like code for bearer tokens (ID, Access, Refresh)
 - `token` represents the implicit flow and returns the bearer tokens directly to your application
-- The `redirect_uri` must be allowed in the AMazon Cognito configuration. You can specify the value via the `CallbackURLs` property under the `CognitoUserPoolClientWebApplication` (line 35 in the [template.yaml](./template.yaml)`).
+- The `redirect_uri` must be allowed in the Amazon Cognito configuration. You can specify the value via the `CallbackURLs` property under the `CognitoUserPoolClientWebApplication` (line 35 in the [template.yaml](./template.yaml)).
 
 Here’s a full example from the CloudFormation Template:
 
@@ -60,8 +60,24 @@ https://${DomainName}.auth.${AwsRegion}.amazoncognito.com/login
 ?client_id=${UserPoolClient}
 &response_type=code
 &scope=email+openid+profile
-&redirect_uri=http://localhost:5000
+&redirect_uri=http://localhost:5000/cognito_redirect
 ```
+
+After you register a new user in the Amazon Cognito url above, it will redirect you to:
+
+```bash
+# the pattern is:
+<redirect_uri>?code=XXXX-XXXX-XXXX-XXXX
+# the redirect_uri is configured in the user pool client
+```
+
+based on the example above, we have:
+
+```
+http://localhost:5000/cognito_redirect?code=XXXX-XXXX-XXXX-XXXX
+```
+
+You app (or the Flask app in this repository), will be running at `localhost:5000` with a route called `/cognito_redirect`
 
 ### Screenshots
 
