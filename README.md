@@ -1,5 +1,13 @@
 # 2021-03-27 - Flask with Amazon Cognito
 
+### Running Flask App
+
+```
+pip install flask
+export FLASK_APP=app.py && flask run
+ * Running on http://127.0.0.1:5000/
+```
+
 ### Template Deploy
 
 To deploy [AWS CloudFormation](https://aws.amazon.com/cloudformation/):
